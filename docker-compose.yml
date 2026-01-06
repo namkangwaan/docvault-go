@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: docvault-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: docvault
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./internal/database/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - docvault-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: docvault-app
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVER_PORT=8080
+      - SERVER_HOST=0.0.0.0
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/docvault?sslmode=disable
+      - STORAGE_BASE_PATH=/data/documents
+      - STORAGE_TEMP_PATH=/data/documents/temp
+      - STORAGE_PREVIEW_PATH=/data/documents/preview
+      - JWT_SECRET=your-super-secret-key-change-in-production
+      - ENABLE_MAGIC_BYTE_CHECK=true
+      - ENABLE_MIME_CHECK=true
+      - ENABLE_MALWARE_SCANNER=true
+      - ENABLE_DOCUMENT_CHECK=true
+      - ENABLE_ANTIVIRUS_SCAN=false
+      - ENABLE_QUARANTINE=true
+      - QUARANTINE_PATH=/data/quarantine
+      - TEMP_SCAN_PATH=/tmp/security-scan
+    volumes:
+      - document_storage:/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - docvault-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+  document_storage:
+    driver: local
+
+networks:
+  docvault-network:
+    driver: bridge
