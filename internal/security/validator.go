@@ -25,7 +25,7 @@ type Validator struct {
 // NewValidator creates a new security validator
 func NewValidator(cfg *config.SecurityConfig) (*Validator, error) {
 	// Create temp scan directory
-	if err := os.MkdirAll(cfg.TempScanPath, 0755); err != nil {
+	if err := os.MkdirAll(cfg.TempScanPath, 0700); err != nil {
 		return nil, fmt.Errorf("failed to create temp scan directory: %w", err)
 	}
 

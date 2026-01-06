@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -11,14 +13,16 @@ import (
 )
 
 type FileHandler struct {
-	fileService *services.FileService
-	storage     *storage.NFSStorage
+	fileService     *services.FileService
+	documentService *services.DocumentService
+	storage         *storage.NFSStorage
 }
 
-func NewFileHandler(fileService *services.FileService, storage *storage.NFSStorage) *FileHandler {
+func NewFileHandler(fileService *services.FileService, documentService *services.DocumentService, storage *storage.NFSStorage) *FileHandler {
 	return &FileHandler{
-		fileService: fileService,
-		storage:     storage,
+		fileService:     fileService,
+		documentService: documentService,
+		storage:         storage,
 	}
 }
 
@@ -187,8 +191,13 @@ func (h *FileHandler) FinalizeChunkedUpload(c *fiber.Ctx) error {
 		})
 	}
 
-	// Generate final file path
-	finalPath := fmt.Sprintf("%s/%s", h.storage.GetBufferPool(), session.FileName)
+	// Generate final file path in temp directory
+	finalPath := filepath.Join(os.TempDir(), "docvault-finalized", session.FileName)
+	if err := os.MkdirAll(filepath.Dir(finalPath), 0700); err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "failed to create finalized directory",
+		})
+	}
 
 	// Finalize upload
 	if err := chunker.Finalize(req.SessionID, finalPath); err != nil {
@@ -278,8 +287,10 @@ func (h *FileHandler) DownloadFile(c *fiber.Ctx) error {
 		return err
 	}
 
-	// Increment download count
-	go h.fileService.GetFile(c.Context(), id)
+	// Increment download count on document
+	if file.DocumentID > 0 {
+		go h.documentService.IncrementDownloadCount(c.Context(), file.DocumentID)
+	}
 
 	return nil
 }

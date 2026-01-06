@@ -50,7 +50,7 @@ func (c *Chunker) InitSession(sessionID, fileName string, totalSize, chunkSize i
 	}
 
 	tempPath := filepath.Join(c.tempDir, sessionID)
-	if err := os.MkdirAll(tempPath, 0755); err != nil {
+	if err := os.MkdirAll(tempPath, 0700); err != nil {
 		return nil, fmt.Errorf("failed to create temp directory: %w", err)
 	}
 
@@ -84,7 +84,7 @@ func (c *Chunker) SaveChunk(sessionID string, chunkIndex int, data []byte) error
 	defer session.mu.Unlock()
 
 	chunkPath := filepath.Join(session.TempPath, fmt.Sprintf("chunk_%d", chunkIndex))
-	if err := os.WriteFile(chunkPath, data, 0644); err != nil {
+	if err := os.WriteFile(chunkPath, data, 0600); err != nil {
 		return fmt.Errorf("failed to save chunk: %w", err)
 	}
 

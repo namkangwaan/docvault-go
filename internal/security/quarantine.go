@@ -19,7 +19,7 @@ type Quarantine struct {
 // NewQuarantine creates a new quarantine manager
 func NewQuarantine(enabled bool, quarantinePath string) (*Quarantine, error) {
 	if enabled {
-		if err := os.MkdirAll(quarantinePath, 0755); err != nil {
+		if err := os.MkdirAll(quarantinePath, 0700); err != nil {
 			return nil, fmt.Errorf("failed to create quarantine directory: %w", err)
 		}
 	}
@@ -41,7 +41,7 @@ func (q *Quarantine) QuarantineFile(filePath, reason string) (string, error) {
 	quarantinedPath := filepath.Join(q.quarantinePath, quarantineID)
 
 	// Create quarantine subdirectory
-	if err := os.MkdirAll(quarantinedPath, 0755); err != nil {
+	if err := os.MkdirAll(quarantinedPath, 0700); err != nil {
 		return "", fmt.Errorf("failed to create quarantine subdirectory: %w", err)
 	}
 

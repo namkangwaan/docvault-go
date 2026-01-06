@@ -76,7 +76,7 @@ func main() {
 	authHandler := handlers.NewAuthHandler(authService)
 	categoryHandler := handlers.NewCategoryHandler(categoryService)
 	documentHandler := handlers.NewDocumentHandler(documentService)
-	fileHandler := handlers.NewFileHandler(fileService, nfsStorage)
+	fileHandler := handlers.NewFileHandler(fileService, documentService, nfsStorage)
 
 	// Initialize Fiber app
 	app := fiber.New(fiber.Config{
