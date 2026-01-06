@@ -19,14 +19,14 @@ func NewDocumentRepository(db *pgxpool.Pool) *DocumentRepository {
 }
 
 type DocumentFilter struct {
-	CategoryID    *int64
-	SearchQuery   string
-	OrderNumber   string
+	CategoryID        *int64
+	SearchQuery       string
+	OrderNumber       string
 	EffectiveDateFrom *time.Time
 	EffectiveDateTo   *time.Time
-	IsPublished   *bool
-	Limit         int
-	Offset        int
+	IsPublished       *bool
+	Limit             int
+	Offset            int
 }
 
 func (r *DocumentRepository) Create(ctx context.Context, doc *models.Document) error {

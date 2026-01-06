@@ -30,11 +30,11 @@ func (j *JSONB) Scan(value interface{}) error {
 		*j = nil
 		return nil
 	}
-	
+
 	bytes, ok := value.([]byte)
 	if !ok {
 		return nil
 	}
-	
+
 	return json.Unmarshal(bytes, j)
 }

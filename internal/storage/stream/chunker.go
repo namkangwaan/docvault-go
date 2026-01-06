@@ -10,16 +10,16 @@ import (
 
 // ChunkUploadSession represents a chunked upload session
 type ChunkUploadSession struct {
-	ID            string
-	FileName      string
-	TotalSize     int64
-	ChunkSize     int64
-	TotalChunks   int
+	ID             string
+	FileName       string
+	TotalSize      int64
+	ChunkSize      int64
+	TotalChunks    int
 	ReceivedChunks map[int]bool
-	TempPath      string
-	CreatedAt     time.Time
-	LastUpdated   time.Time
-	mu            sync.RWMutex
+	TempPath       string
+	CreatedAt      time.Time
+	LastUpdated    time.Time
+	mu             sync.RWMutex
 }
 
 // Chunker manages chunked file uploads

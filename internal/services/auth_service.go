@@ -12,7 +12,7 @@ import (
 )
 
 type AuthService struct {
-	userRepo *repository.UserRepository
+	userRepo  *repository.UserRepository
 	jwtConfig *config.JWTConfig
 }
 

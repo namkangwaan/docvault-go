@@ -20,8 +20,8 @@ func NewDocumentValidator(enabled bool) *DocumentValidator {
 
 // ValidationResult represents document validation result
 type ValidationResult struct {
-	IsValid bool
-	Errors  []string
+	IsValid  bool
+	Errors   []string
 	Warnings []string
 }
 
@@ -112,7 +112,7 @@ func (v *DocumentValidator) validateOOXML(data []byte, result *ValidationResult)
 
 // isZipBomb checks if the ZIP archive is a potential ZIP bomb
 func (v *DocumentValidator) isZipBomb(zipReader *zip.Reader) bool {
-	const maxCompressionRatio = 100 // 100:1 compression ratio threshold
+	const maxCompressionRatio = 100         // 100:1 compression ratio threshold
 	const maxTotalSize = 1024 * 1024 * 1024 // 1GB uncompressed size threshold
 
 	var totalUncompressed uint64

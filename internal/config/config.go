@@ -29,13 +29,13 @@ type DatabaseConfig struct {
 }
 
 type StorageConfig struct {
-	BasePath         string
-	TempPath         string
-	PreviewPath      string
-	OrganizeByDate   bool
-	ChunkSize        int64
-	BufferSize       int
-	MaxFileSize      int64
+	BasePath       string
+	TempPath       string
+	PreviewPath    string
+	OrganizeByDate bool
+	ChunkSize      int64
+	BufferSize     int
+	MaxFileSize    int64
 }
 
 type JWTConfig struct {
@@ -44,15 +44,15 @@ type JWTConfig struct {
 }
 
 type SecurityConfig struct {
-	EnableMagicByteCheck  bool
-	EnableMimeCheck       bool
-	EnableMalwareScanner  bool
-	EnableDocumentCheck   bool
-	EnableAntivirusScan   bool
-	ClamAVAddress         string
-	EnableQuarantine      bool
-	QuarantinePath        string
-	TempScanPath          string
+	EnableMagicByteCheck bool
+	EnableMimeCheck      bool
+	EnableMalwareScanner bool
+	EnableDocumentCheck  bool
+	EnableAntivirusScan  bool
+	ClamAVAddress        string
+	EnableQuarantine     bool
+	QuarantinePath       string
+	TempScanPath         string
 }
 
 func Load() (*Config, error) {

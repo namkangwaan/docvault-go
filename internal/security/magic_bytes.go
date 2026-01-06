@@ -15,12 +15,12 @@ type MagicBytes struct {
 var knownSignatures = []MagicBytes{
 	// PDF
 	{Extension: "pdf", Signature: []byte{0x25, 0x50, 0x44, 0x46}, Offset: 0}, // %PDF
-	
+
 	// Microsoft Office (DOCX, XLSX, PPTX) - ZIP format
 	{Extension: "docx", Signature: []byte{0x50, 0x4B, 0x03, 0x04}, Offset: 0}, // PK..
 	{Extension: "xlsx", Signature: []byte{0x50, 0x4B, 0x03, 0x04}, Offset: 0}, // PK..
 	{Extension: "pptx", Signature: []byte{0x50, 0x4B, 0x03, 0x04}, Offset: 0}, // PK..
-	
+
 	// Old Microsoft Office formats
 	{Extension: "doc", Signature: []byte{0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1}, Offset: 0},
 	{Extension: "xls", Signature: []byte{0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1}, Offset: 0},

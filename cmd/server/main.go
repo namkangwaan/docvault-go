@@ -12,7 +12,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/joho/godotenv"
-	
+
 	"github.com/namkangwaan/docvault-go/internal/config"
 	"github.com/namkangwaan/docvault-go/internal/database"
 	"github.com/namkangwaan/docvault-go/internal/handlers"

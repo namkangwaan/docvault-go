@@ -25,7 +25,7 @@ func (h *DocumentHandler) ListDocuments(c *fiber.Ctx) error {
 	// Parse query parameters
 	limit, _ := strconv.Atoi(c.Query("limit", "30"))
 	offset, _ := strconv.Atoi(c.Query("offset", "0"))
-	
+
 	if limit > 100 {
 		limit = 100
 	}

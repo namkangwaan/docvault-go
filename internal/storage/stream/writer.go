@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"hash"
 	"io"
 	"os"
 )
@@ -12,7 +13,7 @@ import (
 type ChunkedWriter struct {
 	file         *os.File
 	bufferPool   *BufferPool
-	hash         *sha256.Hash
+	hash         hash.Hash
 	bytesWritten int64
 }
 
@@ -23,12 +24,10 @@ func NewChunkedWriter(filePath string, bufferPool *BufferPool) (*ChunkedWriter, 
 		return nil, fmt.Errorf("failed to create file: %w", err)
 	}
 
-	hash := sha256.New()
-
 	return &ChunkedWriter{
 		file:       file,
 		bufferPool: bufferPool,
-		hash:       &hash,
+		hash:       sha256.New(),
 	}, nil
 }
 
@@ -41,7 +40,7 @@ func (cw *ChunkedWriter) Write(p []byte) (n int, err error) {
 
 	// Update hash
 	if cw.hash != nil {
-		(*cw.hash).Write(p[:n])
+		cw.hash.Write(p[:n])
 	}
 
 	cw.bytesWritten += int64(n)
@@ -64,7 +63,7 @@ func (cw *ChunkedWriter) BytesWritten() int64 {
 // Checksum returns the SHA-256 checksum of the written data
 func (cw *ChunkedWriter) Checksum() string {
 	if cw.hash != nil {
-		return hex.EncodeToString((*cw.hash).Sum(nil))
+		return hex.EncodeToString(cw.hash.Sum(nil))
 	}
 	return ""
 }

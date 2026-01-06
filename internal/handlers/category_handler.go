@@ -21,7 +21,7 @@ func NewCategoryHandler(categoryService *services.CategoryService) *CategoryHand
 // ListCategories returns all categories (public endpoint)
 func (h *CategoryHandler) ListCategories(c *fiber.Ctx) error {
 	includeInactive := c.Query("include_inactive") == "true"
-	
+
 	categories, err := h.categoryService.List(c.Context(), includeInactive)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{

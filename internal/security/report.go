@@ -7,40 +7,40 @@ import (
 
 // Report represents a security scan report
 type Report struct {
-	FileName           string
-	FileSize           int64
-	FileExtension      string
-	ScanStartTime      time.Time
-	ScanEndTime        time.Time
-	ScanDuration       time.Duration
-	MagicBytesPassed   bool
-	MagicBytesError    string
-	MimeTypePassed     bool
-	MimeTypeDetected   string
-	MimeTypeError      string
-	MalwareScanPassed  bool
-	MalwareThreats     []string
+	FileName            string
+	FileSize            int64
+	FileExtension       string
+	ScanStartTime       time.Time
+	ScanEndTime         time.Time
+	ScanDuration        time.Duration
+	MagicBytesPassed    bool
+	MagicBytesError     string
+	MimeTypePassed      bool
+	MimeTypeDetected    string
+	MimeTypeError       string
+	MalwareScanPassed   bool
+	MalwareThreats      []string
 	DocumentValidPassed bool
-	DocumentErrors     []string
-	DocumentWarnings   []string
-	AntivirusPassed    *bool
-	AntivirusError     string
-	OverallPassed      bool
-	QuarantineID       string
+	DocumentErrors      []string
+	DocumentWarnings    []string
+	AntivirusPassed     *bool
+	AntivirusError      string
+	OverallPassed       bool
+	QuarantineID        string
 }
 
 // NewReport creates a new security report
 func NewReport(fileName string, fileSize int64, fileExtension string) *Report {
 	return &Report{
-		FileName:           fileName,
-		FileSize:           fileSize,
-		FileExtension:      fileExtension,
-		ScanStartTime:      time.Now(),
-		MagicBytesPassed:   true,
-		MimeTypePassed:     true,
-		MalwareScanPassed:  true,
+		FileName:            fileName,
+		FileSize:            fileSize,
+		FileExtension:       fileExtension,
+		ScanStartTime:       time.Now(),
+		MagicBytesPassed:    true,
+		MimeTypePassed:      true,
+		MalwareScanPassed:   true,
 		DocumentValidPassed: true,
-		OverallPassed:      true,
+		OverallPassed:       true,
 	}
 }
 

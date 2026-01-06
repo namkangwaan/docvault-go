@@ -63,10 +63,10 @@ func (s *CategoryService) GetBySlug(ctx context.Context, slug string) (*models.C
 func (s *CategoryService) generateSlug(name string) string {
 	// Convert to lowercase
 	slug := strings.ToLower(name)
-	
+
 	// Replace spaces with hyphens
 	slug = strings.ReplaceAll(slug, " ", "-")
-	
+
 	// Remove special characters (keep only alphanumeric and hyphens)
 	var result strings.Builder
 	for _, char := range slug {
@@ -74,16 +74,16 @@ func (s *CategoryService) generateSlug(name string) string {
 			result.WriteRune(char)
 		}
 	}
-	
+
 	slug = result.String()
-	
+
 	// Remove consecutive hyphens
 	for strings.Contains(slug, "--") {
 		slug = strings.ReplaceAll(slug, "--", "-")
 	}
-	
+
 	// Trim hyphens from start and end
 	slug = strings.Trim(slug, "-")
-	
+
 	return slug
 }

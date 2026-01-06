@@ -14,9 +14,9 @@ import (
 )
 
 type FileService struct {
-	fileRepo       *repository.FileRepository
-	storage        *storage.NFSStorage
-	validator      *security.Validator
+	fileRepo  *repository.FileRepository
+	storage   *storage.NFSStorage
+	validator *security.Validator
 }
 
 func NewFileService(

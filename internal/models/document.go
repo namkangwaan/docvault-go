@@ -16,7 +16,7 @@ type Document struct {
 	DownloadCount int64      `json:"download_count" db:"download_count"`
 	CreatedAt     time.Time  `json:"created_at" db:"created_at"`
 	UpdatedAt     time.Time  `json:"updated_at" db:"updated_at"`
-	
+
 	// Relations
 	Category *Category `json:"category,omitempty" db:"-"`
 	Files    []File    `json:"files,omitempty" db:"-"`
