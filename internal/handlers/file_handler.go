@@ -191,8 +191,9 @@ func (h *FileHandler) FinalizeChunkedUpload(c *fiber.Ctx) error {
 		})
 	}
 
-	// Generate final file path in temp directory
-	finalPath := filepath.Join(os.TempDir(), "docvault-finalized", session.FileName)
+	// Generate final file path in temp directory using UUID to prevent path traversal
+	safeFileName := fmt.Sprintf("%s_%s", uuid.New().String(), filepath.Base(session.FileName))
+	finalPath := filepath.Join(os.TempDir(), "docvault-finalized", safeFileName)
 	if err := os.MkdirAll(filepath.Dir(finalPath), 0700); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "failed to create finalized directory",

@@ -36,7 +36,7 @@ func (pr *PathResolver) ResolvePath(fileName string, date time.Time) string {
 // EnsureDirectory ensures that the directory for a path exists
 func (pr *PathResolver) EnsureDirectory(path string) error {
 	dir := filepath.Dir(path)
-	if err := os.MkdirAll(dir, 0755); err != nil {
+	if err := os.MkdirAll(dir, 0700); err != nil {
 		return fmt.Errorf("failed to create directory: %w", err)
 	}
 	return nil

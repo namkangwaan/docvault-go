@@ -59,7 +59,7 @@ func (q *Quarantine) QuarantineFile(filePath, reason string) (string, error) {
 		reason,
 		time.Now().Format(time.RFC3339),
 	)
-	if err := os.WriteFile(metadataPath, []byte(metadata), 0644); err != nil {
+	if err := os.WriteFile(metadataPath, []byte(metadata), 0600); err != nil {
 		return "", fmt.Errorf("failed to write metadata: %w", err)
 	}
 
